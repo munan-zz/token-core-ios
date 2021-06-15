@@ -1,12 +1,11 @@
-platform :ios, "9.3"
+platform :ios, "11.0"
 
 target "TokenCore" do
   use_frameworks!
 
-  pod "CryptoSwift", ">= 0.10.0"
-  pod "BigInt", "3.0.0"
+  pod "CryptoSwift", "1.0.0"
+  pod "BigInt", "4.0.0"
   pod "GRKOpenSSLFramework"
-
   pod 'SwiftLint'
 
   target "TokenCoreTests" do

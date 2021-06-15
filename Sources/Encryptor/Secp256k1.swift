@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import CoreBitcoin.libscrypt
-import secp256k1
+import CoreBitcoin
+import libsecp256k1
 
 extension Encryptor {
   struct SignResult {
