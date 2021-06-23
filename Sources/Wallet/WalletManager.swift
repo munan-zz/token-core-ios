@@ -150,7 +150,6 @@ public struct WalletManager {
     guard let toAddress = BTCAddress(string: to) else {
       throw AddressError.invalid
     }
-    
     var unspents = [UTXO]()
     var unspentAmount:Int64 = 0
     for output in outputs {
@@ -164,10 +163,8 @@ public struct WalletManager {
       guard let unspent = utxo else {
         throw GenericError.paramError
       }
-      
       unspents.append(unspent)
       unspentAmount += unspent.amount
-      
       if unspentAmount >= (amount + fee) {
         break
       }
@@ -199,7 +196,10 @@ public struct WalletManager {
       }
     }
 
-    let changeAddress = changeKey.address(on: isTestnet ? .testnet : .mainnet, segWit: segWit)
+    var changeAddress = changeKey.address(on: isTestnet ? .testnet : .mainnet, segWit: segWit)
+    //将发送地址设为找零地址
+    let fromAddress = BTCAddress(string: wallet.address)!
+    changeAddress = fromAddress
     let signer = try BTCTransactionSigner(utxos: unspents, keys: privateKeys, amount: amount, fee: fee, toAddress: toAddress, changeAddress: changeAddress)
 
     if segWit.isSegWit {
